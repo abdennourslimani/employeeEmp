@@ -40,18 +40,18 @@ public class EmployeeService {
 	 * @param employee
 	 */
 	
-	public void updateEmployee(long id) {
-	Session session = null ; 
-	
-	
-	session = HibernateUtil.getSessionFactory().openSession();
-	session.beginTransaction();
-	employeeRepository.updateEmp(id);
-	session.getTransaction().commit();
-	session.close();
-	
-	System.out.println("ajout de l'lement");
-	}
+//	public void updateEmployee(long id) {
+//	Session session = null ; 
+//	
+//	
+//	session = HibernateUtil.getSessionFactory().openSession();
+//	session.beginTransaction();
+//	employeeRepository.updateEmp(id);
+//	session.getTransaction().commit();
+//	session.close();
+//	
+//	System.out.println("ajout de l'lement");
+//	}
 	
 			
 			

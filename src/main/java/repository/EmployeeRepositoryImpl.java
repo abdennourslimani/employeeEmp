@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
@@ -50,44 +53,44 @@ public class EmployeeRepositoryImpl {
 	
 	
 	
-	public void updateEmp(long id ,Employee newEmployee) {
-		
-		// update enregistrement
-		System.out.println("je récupére employee " + "id : " +id);
-		Employee employee = this.findById(id);
-	
-		
-		if(newEmployee.getNom() != null ) {
-			employee.setNom(newEmployee.getNom());
-	}			
-		if(newEmployee.getPrenom() !=null ) {
-			employee.setPrenom(newEmployee.getPrenom());			
-	}	
-	if(newEmployee.getCourriel() != newEmployee.getCourriel()) {
-			employee.setCourriel(newEmployee.getCourriel());
-		}
-		if(newEmployee.getAge() != 0 ) {
-			employee.setAge(newEmployee.getAge());
-		}
-		
-		if(newEmployee.getFonction() !=null ) {
-		employee.setFonction(newEmployee.getFonction());			
-	}	
-		if(newEmployee.getTel() != newEmployee.getTel()) {
-			employee.setTel(newEmployee.getTel());
-		}
-		if(newEmployee.getAdresse() != newEmployee.getAdresse()) {
-			employee.setAdresse(newEmployee.getAdresse());
-		}
-		
-		
-		
-		
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.update();
-		session.close();
-	}
+//	public void updateEmp(long id ,Employee newEmployee) {
+//		
+//		// update enregistrement
+//		System.out.println("je récupére employee " + "id : " +id);
+//		Employee employee = this.findById(id);
+//	
+//		
+//		if(newEmployee.getNom() != null ) {
+//			employee.setNom(newEmployee.getNom());
+//	}			
+//		if(newEmployee.getPrenom() !=null ) {
+//			employee.setPrenom(newEmployee.getPrenom());			
+//	}	
+//	if(newEmployee.getCourriel() != newEmployee.getCourriel()) {
+//			employee.setCourriel(newEmployee.getCourriel());
+//		}
+//		if(newEmployee.getAge() != 0 ) {
+//			employee.setAge(newEmployee.getAge());
+//		}
+//		
+//		if(newEmployee.getFonction() !=null ) {
+//		employee.setFonction(newEmployee.getFonction());			
+//	}	
+//		if(newEmployee.getTel() != newEmployee.getTel()) {
+//			employee.setTel(newEmployee.getTel());
+//		}
+//		if(newEmployee.getAdresse() != newEmployee.getAdresse()) {
+//			employee.setAdresse(newEmployee.getAdresse());
+//		}
+//		
+//		
+//		
+//		
+//		
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		session.update();
+//		session.close();
+//	}
 	
 	
 	
@@ -125,14 +128,24 @@ public class EmployeeRepositoryImpl {
 	 * @return list of employes List<Employee>
 	 */
 	public List<Employee> findAll() {
-		List<Employee> employees =null;
+		List<Employee> results =null;
 		Session session = null ; 
 		
 		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			Query query = session.createQuery("select e from Employee e ");
-			 employees = query.getResultList();
+//			Query query = session.createQuery("select e from Employee e ");
+//			 employees = query.getResultList();
 			
+			
+			session = HibernateUtil.getSessionFactory().openSession();
+			 CriteriaBuilder cb = session.getCriteriaBuilder(); 
+			 CriteriaQuery<Employee> cr = cb.createQuery(Employee.class);
+			 Root<Employee> root = cr.from(Employee.class); 
+			 cr.select(root);
+			 Query query = session.createQuery(cr); 
+			 results = query.getResultList();
+			 
+			 
+			 
 		}catch(Throwable t){
 			t.printStackTrace();
 		}finally {
@@ -140,7 +153,7 @@ public class EmployeeRepositoryImpl {
 				session.close();
 			}
 		}
-		return employees ; 
+		return results; 
 	}	
 	
 	

@@ -23,7 +23,7 @@ public class Main {
 
 	emplController.deleteEmployee(id);
 
-	//emplController.allEmployees();
+	emplController.allEmployees();
 
 	
 	}
