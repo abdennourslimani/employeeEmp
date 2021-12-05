@@ -37,14 +37,15 @@ public class EmployeeController {
 			 * get employee by id 
 			 */
 			
-			public void getEmployeeWithout() {
+			public void getEmployeeWithoutSecteur() {
 					
 					Scanner scanner = new Scanner(System.in);
 					System.out.println("quel est l'id de employee que vous voulez afficher ses coordonnées");
 					long id = scanner.nextLong();
 					Employee employee = employeeService.getEmployeeLight(id);
-					
-			
+					// pas accés à la valeur du tournoi 
+					System.out.println(employee.getSecteur().getNom());
+
 			}
 			
 			

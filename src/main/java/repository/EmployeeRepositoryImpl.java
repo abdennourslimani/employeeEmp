@@ -31,10 +31,9 @@ public class EmployeeRepositoryImpl {
 		
 		
 		// supprimer enregistrement .	
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		System.out.println(employee.getNom() + " avant suppression  avec id " + employee.getId());
-		System.out.println(employee1.getNom());
-		session.delete(employee);
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	
+		session.delete(employee1);
 		System.out.println("tournoir supprimé ");
 	
 	}
@@ -67,8 +66,8 @@ public class EmployeeRepositoryImpl {
 		Employee employee =null;
 		Session session = null ; 
 		
-			session = HibernateUtil.getSessionFactory().openSession();
-			employee = session.get(Employee.class, id);
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		employee = session.get(Employee.class, id);
 			
 		return employee ; 
 	}	
@@ -85,7 +84,7 @@ public class EmployeeRepositoryImpl {
 		List<Employee> employees =null;
 		Session session = null ; 
 		
-		session = HibernateUtil.getSessionFactory().openSession();
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
 
 			 Query query = session.createQuery("from Employee ");
 			 employees = query.getResultList();

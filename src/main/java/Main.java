@@ -57,9 +57,11 @@ public class Main {
 	// recuperer un employee . 
 	//emplController.getEmployee();
 
-	emplController.getEmployees();
+	//emplController.getEmployees();
 
-	
+	//emplController.getEmployeeWithoutSecteur();
+	emplController.getEmployeeWithoutSecteur();
+
 	
 
 

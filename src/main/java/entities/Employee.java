@@ -27,7 +27,7 @@ public class Employee {
 	private String   tel;
 	private String adresse;
 	
-	 @ManyToOne(fetch=FetchType.EAGER) // lazy aussi
+	 @ManyToOne(fetch=FetchType.LAZY) //  EAGER par defaut . 
      @JoinColumn(name="secteur_id")
 	private Secteur secteur; 
 	

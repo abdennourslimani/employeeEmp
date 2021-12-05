@@ -25,16 +25,24 @@ public class EmployeeService {
 	
 	
 	public void createEmployee(Employee employee) {
-	Session session = null ; 
-	
-	
-	session = HibernateUtil.getSessionFactory().openSession();
-	session.beginTransaction();
-	employeeRepository.create( employee);
-	session.getTransaction().commit();
-	session.close();
-	
-	System.out.println("ajout de l'lement");
+		Session session = null ; 
+		Transaction tx = null ; 
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			employeeRepository.create(employee);
+			tx.commit();
+			}catch (Exception e ) {
+				if(tx !=null) {
+					tx.rollback();
+				}
+				e.printStackTrace();
+			}
+			finally {
+				if(session !=null) {
+					session.close();
+				}
+			}
 	}
 
 	
@@ -84,9 +92,12 @@ public class EmployeeService {
 	Transaction tx = null ; 
 	Employee employee =null;
 	try {
-		session = HibernateUtil.getSessionFactory().openSession();
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
 		employee = employeeRepository.findById(id);
+		// on a id ici du secteur car fk  avant de faire appel au proxy  
+		
+		System.out.println(employee.getSecteur().getNom());
 		Hibernate.initialize(employee.getSecteur()); // proxy hibernate
 		tx.commit();
 		}catch (Exception e ) {
@@ -109,10 +120,10 @@ public class EmployeeService {
 	Transaction tx = null ; 
 	Employee employee =null;
 	try {
-		session = HibernateUtil.getSessionFactory().openSession();
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
 		employee = employeeRepository.findById(id);
-		tx.commit();
+		//tx.commit();
 		}catch (Exception e ) {
 			if(tx !=null) {
 				tx.rollback();
