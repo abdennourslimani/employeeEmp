@@ -54,13 +54,20 @@ public class Main {
 //	secteurController.createSecteur(secteur);
 	
 
+	// employée avec secteur 
+	emplController.getEmployeeWithSecteur();
+
+	
+	 // employée sans secteur 
+	//emplController.getEmployeeWithoutSecteur();
+
+	
 	// recuperer un employee . 
 	//emplController.getEmployee();
-
+	
+	//recupere des employées 
 	//emplController.getEmployees();
 
-	//emplController.getEmployeeWithoutSecteur();
-	emplController.getEmployeeWithoutSecteur();
 
 	
 

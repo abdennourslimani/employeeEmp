@@ -1,23 +1,14 @@
-package entities;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+package dto;
 
 
-@Entity
-@Table(name="employee")
-public class Employee {
-		
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY) 
+
+import entities.Filiale;
+import entities.Secteur;
+
+public class EmployeeFullDto {
+
+	
+	
 	private long id ; 
 	private String nom; 
 	private String prenom; 
@@ -27,14 +18,11 @@ public class Employee {
 	private String   tel;
 	private String adresse;
 	
-	 @ManyToOne(fetch=FetchType.LAZY) //  EAGER par defaut . 
-     @JoinColumn(name="secteur_id")
-	private Secteur secteur; 
+	
+	private SecteurDto secteur; 
 	 
-	 
-	 @ManyToOne
-     @JoinColumn(name="filiale_id")
-	private Filiale filiale;
+
+	private FilialeDto filiale;
 	
 	
 	
@@ -123,20 +111,6 @@ public class Employee {
 	}
 
 
-	public Filiale getFiliale() {
-		return filiale;
-	}
-
-
-
-
-	public void setFiliale(Filiale filiale) {
-		this.filiale = filiale;
-	}
-
-
-
-
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
@@ -144,21 +118,34 @@ public class Employee {
 
 
 
-	public Secteur getSecteur() {
+	public SecteurDto getSecteur() {
 		return secteur;
 	}
 
 
 
 
-	public void setSecteur(Secteur secteur) {
+	public void setSecteur(SecteurDto secteur) {
 		this.secteur = secteur;
 	}
 
-	
-	
-	
-	
+
+
+
+	public FilialeDto getFiliale() {
+		return filiale;
+	}
+
+
+
+
+	public void setFiliale(FilialeDto filiale) {
+		this.filiale = filiale;
+	}
+
+
+
+
 	
 	
 	

@@ -1,38 +1,26 @@
-package entities;
+package dto;
 
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import entities.Employee;
+import entities.Entreprise;
 
-@Entity
-@Table(name="entreprise")
+public class FilialeDto {
 
-public class Entreprise {
-	
-	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private long id;
 	private String nom; 
+	
 
-	
-	@OneToMany(mappedBy="entreprise" ,cascade = CascadeType.ALL)
-	private Set<Filiale> filiales;
+//	private EntrepriseDtoSansFiliale entreprise;
 
-	
-	
-	
-	
-	
 
 	public long getId() {
 		return id;
@@ -54,26 +42,16 @@ public class Entreprise {
 	}
 
 
-//	public Set<Filiale> getFiliales() {
-//		return filiales;
+//	public EntrepriseDtoSansFiliale getEntreprise() {
+//		return entreprise;
 //	}
 //
 //
-//	public void setFiliales(Set<Filiale> filiales) {
-//		this.filiales = filiales;
+//	public void setEntreprise(EntrepriseDtoSansFiliale entreprise) {
+//		this.entreprise = entreprise;
 //	}
-//	
-//	
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-
 }

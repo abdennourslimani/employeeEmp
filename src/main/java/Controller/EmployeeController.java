@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+import dto.EmployeeFullDto;
 import entities.Employee;
 import repository.EmployeeRepositoryImpl;
 import service.EmployeeService;
@@ -34,7 +35,7 @@ public class EmployeeController {
 			
 			
 			/**
-			 * get employee by id 
+			 * get employee by id  avec JOIN 
 			 */
 			
 			public void getEmployeeWithoutSecteur() {
@@ -50,7 +51,7 @@ public class EmployeeController {
 			
 			
 			/**
-			 * get employee by id 
+			 * get employee by id  sans JOIN 
 			 */
 			
 			public void getEmployeeWithSecteur() {
@@ -58,8 +59,8 @@ public class EmployeeController {
 					Scanner scanner = new Scanner(System.in);
 					System.out.println("quel est l'id de employee que vous voulez afficher ses coordonnées");
 					long id = scanner.nextLong();
-					Employee employee = employeeService.getEmployeeFull(id);
-					System.out.println(employee.getSecteur().getNom());
+					EmployeeFullDto employee = employeeService.getEmployeeFull(id);
+					System.out.println( " je suis le  nom du secteur "+employee.getSecteur().getNom());
 			
 			}
 			

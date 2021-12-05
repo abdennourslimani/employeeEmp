@@ -1,32 +1,24 @@
 package repository;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
-
-
-import entities.Employee;
+import entities.Entreprise;
 import service.HibernateUtil;
 
-public class EmployeeRepositoryImpl {
+public class EntrepriseRepositoryImpl {
 
-	
-	public void deleteEmploy(long id) {
+	public void deleteEntreprise(long id) {
 		
 		// non persistant Object 
-		Employee employee = new Employee();
-		employee.setId(id);
+		Entreprise entreprise = new Entreprise();
+		entreprise.setId(id);
 		
 		// persistant obj : 
-		Employee employee1 = this.findById(id);
+		Entreprise entreprise1 = this.findById(id);
 		
 		
 		
@@ -35,7 +27,7 @@ public class EmployeeRepositoryImpl {
 	
 		
 		// supression obj persistant 
-		session.delete(employee1);
+		session.delete(entreprise1);
 		System.out.println("tournoir supprimé ");
 	
 	}
@@ -46,9 +38,9 @@ public class EmployeeRepositoryImpl {
 	 * créer un employée 
 	 * @param employee type Employee
 	 */
-	public void create(Employee employee) {
+	public void create(Entreprise entreprise) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.persist(employee);
+		session.persist(entreprise);
 	}
 	
 	
@@ -64,14 +56,14 @@ public class EmployeeRepositoryImpl {
 	 * @return Employee employee
 	 */
 	
-	public Employee findById(long id) {
-		Employee employee =null;
+	public Entreprise findById(long id) {
+		Entreprise entreprise =null;
 		Session session = null ; 
 		
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
-		employee = session.get(Employee.class, id);
+		entreprise = session.get(Entreprise.class, id);
 			
-		return employee ; 
+		return entreprise ; 
 	}	
 	
 	
@@ -82,14 +74,14 @@ public class EmployeeRepositoryImpl {
 	 * getAll elements of data base 
 	 * @return list of employes List<Employee>
 	 */
-	public List<Employee> findAll() {
-		List<Employee> employees =null;
+	public List<Entreprise> findAll() {
+		List<Entreprise> entreprises =null;
 		Session session = null ; 
 		
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-			 Query query = session.createQuery("from Employee ");
-			 employees = query.getResultList();
+			 Query query = session.createQuery("from Entreprise ");
+			 entreprises = query.getResultList();
 			
 			
 //			session = HibernateUtil.getSessionFactory().openSession();
@@ -102,14 +94,7 @@ public class EmployeeRepositoryImpl {
 			 
 			 
 	
-		return employees; 
+		return entreprises; 
 	}	
 	
-	
-	
-	
-	
-	
-
 }
-

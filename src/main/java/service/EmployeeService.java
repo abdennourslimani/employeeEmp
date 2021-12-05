@@ -8,6 +8,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import dto.EmployeeFullDto;
+import dto.FilialeDto;
+import dto.SecteurDto;
 import entities.Employee;
 import repository.EmployeeRepositoryImpl;
 
@@ -87,19 +90,46 @@ public class EmployeeService {
 	
 	
 	
-	public Employee getEmployeeFull(Long id) {
+	public EmployeeFullDto getEmployeeFull(Long id) {
 	Session session = null ; 
 	Transaction tx = null ; 
 	Employee employee =null;
+	EmployeeFullDto dto = null ; 
 	try {
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
 		employee = employeeRepository.findById(id);
 		// on a id ici du secteur car fk  avant de faire appel au proxy  
+		Hibernate.initialize(employee.getSecteur());  // charger proxy 
 		
-		System.out.println(employee.getSecteur().getNom());
-		Hibernate.initialize(employee.getSecteur()); // proxy hibernate
+		 dto = new EmployeeFullDto(); 
+		 dto.setId(employee.getId());
+		 dto.setNom(employee.getNom());
+		 dto.setCourriel(employee.getCourriel());
+		 dto.setAge(employee.getAge());
+		 dto.setFonction(employee.getFonction());
+		 dto.setTel(employee.getTel());
+		 dto.setAdresse(employee.getAdresse());
+		 
+		 SecteurDto secteurDto = new SecteurDto(); 
+		 secteurDto.setId(employee.getSecteur().getId());
+		 secteurDto.setNom(employee.getSecteur().getNom());
+		 secteurDto.setLocalisation(employee.getSecteur().getLocalisation());
+
+		 dto.setSecteur(secteurDto);
+		 
+//		 FilialeDto filialeDto = new FilialeDto(); 
+//		 filialeDto.setId();
+		 
+//		 dto.setFiliale(filialeDto);
+
+		
+		
+		
+		// proxy hibernate
+		System.out.println(employee.getSecteur().getClass().getName());
 		tx.commit();
+		
 		}catch (Exception e ) {
 			if(tx !=null) {
 				tx.rollback();
@@ -111,7 +141,7 @@ public class EmployeeService {
 				session.close();
 			}
 		}
-		return employee;
+		return dto;
 	}
 	
 	
@@ -123,7 +153,7 @@ public class EmployeeService {
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
 		employee = employeeRepository.findById(id);
-		//tx.commit();
+		tx.commit();
 		}catch (Exception e ) {
 			if(tx !=null) {
 				tx.rollback();
