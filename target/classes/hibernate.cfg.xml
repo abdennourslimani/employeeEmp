@@ -15,6 +15,9 @@
 
 		<!-- on map -->
 		<mapping class="entities.Employee"/>
+		<mapping class="entities.Secteur"/>
+		<mapping class="entities.Entreprise"/>
+		<mapping class="entities.Filiale"/>
 
     </session-factory>
 

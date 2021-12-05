@@ -2,7 +2,9 @@ package service;
 
 
 import java.util.List;
+import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -28,30 +30,13 @@ public class EmployeeService {
 	
 	session = HibernateUtil.getSessionFactory().openSession();
 	session.beginTransaction();
-	employeeRepository.create(employee);
+	employeeRepository.create( employee);
 	session.getTransaction().commit();
 	session.close();
 	
 	System.out.println("ajout de l'lement");
 	}
 
-	/**
-	 * update employee service
-	 * @param employee
-	 */
-	
-//	public void updateEmployee(long id) {
-//	Session session = null ; 
-//	
-//	
-//	session = HibernateUtil.getSessionFactory().openSession();
-//	session.beginTransaction();
-//	employeeRepository.updateEmp(id);
-//	session.getTransaction().commit();
-//	session.close();
-//	
-//	System.out.println("ajout de l'lement");
-//	}
 	
 			
 			
@@ -89,8 +74,37 @@ public class EmployeeService {
 	
 	}
 	
+	// 2 eme methode avec les lazy . 
 	
-	public Employee getEmployeeById(Long id) {
+	
+	
+	
+	public Employee getEmployeeFull(Long id) {
+	Session session = null ; 
+	Transaction tx = null ; 
+	Employee employee =null;
+	try {
+		session = HibernateUtil.getSessionFactory().openSession();
+		tx = session.beginTransaction();
+		employee = employeeRepository.findById(id);
+		Hibernate.initialize(employee.getSecteur()); // proxy hibernate
+		tx.commit();
+		}catch (Exception e ) {
+			if(tx !=null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		finally {
+			if(session !=null) {
+				session.close();
+			}
+		}
+		return employee;
+	}
+	
+	
+	public Employee getEmployeeLight(Long id) {
 	Session session = null ; 
 	Transaction tx = null ; 
 	Employee employee =null;
@@ -115,7 +129,9 @@ public class EmployeeService {
 	
 	
 	
-	public void getEmployees() {
+	
+	
+	public List<Employee> getEmployees() {
 	Session session = null ; 
 	Transaction tx = null ; 
 	List<Employee> employees =null;
@@ -124,14 +140,7 @@ public class EmployeeService {
 		tx = session.beginTransaction();
 		employees = employeeRepository.findAll();
 		
-		// afficher les noms des employés de la boite 
-		employees.stream().forEach(employee ->{
-			
-			System.out.println(" le nom des employées : " +  employee.getNom());
-			
-		});
-		
-		
+	
 		tx.commit();
 		}catch (Exception e ) {
 			if(tx !=null) {
@@ -144,6 +153,8 @@ public class EmployeeService {
 				session.close();
 			}
 		}
+	
+	return employees;
 	}
 	
 	

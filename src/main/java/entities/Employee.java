@@ -2,10 +2,14 @@ package entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -13,7 +17,6 @@ import javax.persistence.Table;
 public class Employee {
 		
 	@Id
-	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private long id ; 
 	private String nom; 
@@ -24,28 +27,17 @@ public class Employee {
 	private String   tel;
 	private String adresse;
 	
+	 @ManyToOne(fetch=FetchType.EAGER) // lazy aussi
+     @JoinColumn(name="secteur_id")
+	private Secteur secteur; 
+	
+	 @Transient
+	private Filiale filiale;
 	
 	
 	
-	public Employee() {
-		super();
-	}
-
-
-
-
-	public Employee(long id, String nom, String prenom, String courriel, int age, String fonction, String tel,String adresse) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.courriel = courriel;
-		this.age = age;
-		this.fonction = fonction;
-		this.tel = tel;
-		this.adresse = adresse;
-	}
-
+	
+	
 
 
 	public long getId() {
@@ -133,5 +125,28 @@ public class Employee {
 		this.adresse = adresse;
 	}
 
+
+
+
+	public Secteur getSecteur() {
+		return secteur;
+	}
+
+
+
+
+	public void setSecteur(Secteur secteur) {
+		this.secteur = secteur;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
